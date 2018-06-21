@@ -1,1 +1,15 @@
 @import 'colors';
+
+.container {
+    margin-top: 50px;
+    min-height: 600px;
+}
+
+#project-list {
+    min-height: 400px;
+    border-right: 1px solid $border-grey;
+}
+
+#project-view {
+    padding: 0 40px;
+}
