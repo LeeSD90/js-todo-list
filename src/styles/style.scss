@@ -10,6 +10,33 @@
     border-right: 1px solid $border-grey;
 }
 
+#projects {
+    margin-bottom: 15px;
+}
+
+#new-project {
+    width: 0px;
+    opacity: 0;
+    transition: all .5s ease;
+    padding: 0;
+    &.expanded {
+        padding: .375rem .75rem;
+        margin-right: 10px;
+        display: block;
+        width: 110px;
+        opacity: 1;
+    }
+}
+
 #project-view {
     padding: 0 40px;
+}
+
+form {
+    .form-row{
+        margin: 0;
+    }
+    input.form-control{
+        
+    }
 }

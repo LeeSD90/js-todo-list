@@ -10,7 +10,7 @@ const renderProject = (project) => {
     
     var heading = document.createElement('h1');
     view.appendChild(heading);
-    
+
     heading.innerHTML = project.name;
     project.todos.forEach((todo) => {
         var item = document.createElement("div");
@@ -21,7 +21,7 @@ const renderProject = (project) => {
 }
 
 const renderProjectList = () => {
-    var view = document.getElementById('project-list');
+    var view = document.getElementById('projects');
     projects.forEach((p) => {
         var item = document.createElement("div");
         item.setAttribute("class", "project-item");
