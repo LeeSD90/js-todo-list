@@ -4,3 +4,5 @@ const todoFactory = (title, description, dueDate, priority) => {
     dueDate,
     priority }
 };
+
+export default todoFactory;

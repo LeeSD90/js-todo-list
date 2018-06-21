@@ -1,4 +1,7 @@
-import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './styles/style.scss';
 
-console.log("hello!");
+import render from './render';
+
+render();
