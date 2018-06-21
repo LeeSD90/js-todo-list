@@ -1,4 +1,4 @@
-import projects from "./logic.js";
+import { projects, addNewProject } from "./logic.js";
 
 const render = () => {
     renderProjectList();
@@ -30,4 +30,35 @@ const renderProjectList = () => {
     })
 }
 
-export default render;
+const setListeners = () => {
+    document.getElementById('new-project-button').addEventListener("click", toggleButtons);
+    document.getElementById('submit-new-project-button').addEventListener("click", newProject);
+
+    document.addEventListener("click", (evt) => {
+        const form = document.getElementById('new-project-form');
+        let target = evt.target;
+
+        do{
+            if(target === form){
+                return;
+            }
+            target = target.parentNode;
+        } while (target);
+        if (document.getElementById('new-project').classList.contains("focused")) { toggleButtons(); }
+    })
+}
+
+function newProject() {
+    console.log("yo")
+    addNewProject(document.getElementById('new-project').value);
+    toggleButtons();
+    render();
+}
+
+function toggleButtons() {
+    document.getElementById('new-project').classList.toggle("focused");
+    document.getElementById('new-project-button').classList.toggle("hidden");
+    document.getElementById('submit-new-project-button').classList.toggle("hidden");
+}
+
+export { setListeners, render };

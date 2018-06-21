@@ -18,4 +18,4 @@ var todo = todoFactory("myFirstTodo", "Here is a test Todo", "date", 3);
 addNewProject("Default");
 projects.filter(p => { return p.name === "Default" })[0].addToProject(todo);
 
-export default projects;
+export {projects, addNewProject};
