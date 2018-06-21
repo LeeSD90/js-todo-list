@@ -3,18 +3,20 @@ import todoFactory from './todo.js';
 
 const addNewProject = (name) => {
     const project = projectFactory(name);
-
-    return project;
+    // Only add if the name is not a duplicate
+    if (projects.filter(p => (p.name === name)).length == 0){ projects.push(project); }
 }
 
-const addNewTodo = (title, description, dueDate, priority) => {
+const addNewTodo = (project, title, description, dueDate, priority) => {
     var todo = todoFactory(title, description, dueDate, priority);
-
-    return todo;
+    project.addToProject(todo);
 }
 
 var projects = [];
-var def = addNewProject("Default");
-projects.push(def);
+var todo = todoFactory("myFirstTodo", "Here is a test Todo", "date", 3);
+addNewProject("Default");
+
+projects.filter(p => { return p.name === "Default" })[0].addToProject(todo);
+
 
 export default projects;
