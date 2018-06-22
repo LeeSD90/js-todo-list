@@ -1,6 +1,7 @@
 import { projects, addNewProject } from "./logic.js";
 
 const render = () => {
+    clear();
     renderProjectList();
     renderProject(projects[0]);
 }
@@ -46,6 +47,14 @@ const setListeners = () => {
         } while (target);
         if (document.getElementById('new-project').classList.contains("focused")) { toggleButtons(); }
     })
+}
+
+const clear = () => {
+    var projects = document.getElementById('projects');
+    var project = document.getElementById('project-view');
+
+    project.innerHTML = "";
+    projects.innerHTML = "";
 }
 
 function newProject() {
