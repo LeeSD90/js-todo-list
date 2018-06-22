@@ -2,13 +2,17 @@
 
 /* Main */
 
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
 .container {
     margin-top: 50px;
     min-height: 600px;
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 /* Projects List */
@@ -22,7 +26,7 @@
     margin-bottom: 15px;
 }
 
-#new-project {
+.project-textbox {
     width: 0px;
     opacity: 0;
     transition: all .5s ease;
@@ -57,4 +61,41 @@ form {
 
 #project-view {
     padding: 0 40px;
+    #project-heading {
+        margin-bottom: 20px;
+        #project-name {
+            font-size: 2.5rem;
+            margin-bottom: .5rem;
+            font-family: inherit;
+            font-weight: 500;
+            line-height: 1.2;
+            color: inherit;
+            margin-right: 10px;
+            border: none;
+        }
+        .toolbar {
+            display: inline;
+        }
+        .toolbar-item {
+            display: inline;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin-left: 10px;
+            &.edit {
+                color: $link-blue;
+            }
+            &.delete {
+                color: $link-red;
+            }
+            &.submit {
+                color: $link-green;
+            }
+        }
+        button {
+            display: inline;
+        }
+    }
+    #project-items {
+        padding-left: 20px;
+    }
 }

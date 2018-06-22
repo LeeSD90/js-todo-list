@@ -4,8 +4,6 @@ import './styles/style.scss';
 
 import { setListeners, render } from './render';
 
-
-
 document.addEventListener('DOMContentLoaded', function() {
     render();
  });
