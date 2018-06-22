@@ -1,9 +1,17 @@
 @import 'colors';
 
+/* Main */
+
 .container {
     margin-top: 50px;
     min-height: 600px;
 }
+
+.hidden {
+    display: none;
+}
+
+/* Projects List */
 
 #project-list {
     min-height: 400px;
@@ -28,16 +36,25 @@
     }
 }
 
-#project-view {
-    padding: 0 40px;
-}
-
 form {
     .form-row{
         margin: 0;
     }
 }
 
-.hidden {
-    display: none;
+.project-item {
+    cursor: pointer;
+    color: $link-blue;
+    &::before{
+        content: " - ";
+    }
+    &:hover{
+        text-decoration: underline;
+    }
+}
+
+/* Project View */
+
+#project-view {
+    padding: 0 40px;
 }

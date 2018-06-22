@@ -8,7 +8,8 @@ const render = () => {
 
 const renderProject = (project) => {
     var view = document.getElementById('project-view');
-    
+    view.innerHTML = "";
+
     var heading = document.createElement('h1');
     view.appendChild(heading);
 
@@ -26,6 +27,7 @@ const renderProjectList = () => {
     projects.forEach((p) => {
         var item = document.createElement("div");
         item.setAttribute("class", "project-item");
+        item.addEventListener("click", function(){ return renderProject(p) });
         item.innerHTML = p.name;
         view.appendChild(item);
     })
@@ -58,7 +60,6 @@ const clear = () => {
 }
 
 function newProject() {
-    console.log("yo")
     addNewProject(document.getElementById('new-project').value);
     toggleButtons();
     render();

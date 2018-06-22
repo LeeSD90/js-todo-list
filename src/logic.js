@@ -4,8 +4,8 @@ import todoFactory from './todo.js';
 const addNewProject = (name) => {
     const project = projectFactory(name);
 
-    // Only add if the name is not a duplicate
-    if (projects.filter(p => (p.name === name)).length == 0){ projects.push(project); }
+    // Only add if the name is not a duplicate and is not an empty string
+    if (projects.filter(p => (p.name === name)).length == 0 && name.length > 0){ projects.push(project); }
 }
 
 const addNewTodo = (project, title, description, dueDate, priority) => {
