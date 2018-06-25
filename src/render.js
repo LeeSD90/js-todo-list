@@ -45,13 +45,28 @@ const renderProject = (project, index) => {
     projectName.parentNode.insertBefore(toolbar, projectName.nextSibling);
     
     var ul = document.createElement("ul");
-    ul.setAttribute("class", "list-group list-group-flush")
+    ul.setAttribute("class", "list-group")
     project.todos.forEach((todo) => {
         var item = document.createElement("li");
         var date = document.createElement("span");
         date.setAttribute("class", "todo-date");
         date.innerHTML = todo.dueDate;
-        item.setAttribute("class", "todo-item list-group-item");
+        var priority = "";
+        console.log(priority)
+        switch(parseInt(todo.priority)){
+            case 1:
+                priority = "-info";
+                break;
+            case 2:
+                priority = "-warning"
+                break;
+            case 3:
+                priority = "-danger"
+                break;
+            default:
+                priority = "-danger"
+        }
+        item.setAttribute("class", "todo-item list-group-item list-group-item" + priority);
         item.innerHTML = todo.title;
         item.appendChild(date);
         ul.appendChild(item)

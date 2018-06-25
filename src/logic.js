@@ -25,9 +25,13 @@ const addNewTodo = (project, title, description, dueDate, priority) => {
 
 var todo = todoFactory("myFirstTodo", "Here is a test Todo", "14/5/2018", 3);
 var todo2 = todoFactory("a second todo", "Here is a second test todo", "1/4/2019", 2);
+var todo3 = todoFactory("a  todo", "Here is a second test todo", "1/2/2019", 1);
+var todo4 = todoFactory("a todo", "Here is a second test todo", "1/6/2019", 1);
 addNewProject("Todo List");
 addNewProject("Second project");
 projects.filter(p => { return p.name === "Todo List" })[0].addToProject(todo);
 projects.filter(p => { return p.name === "Todo List" })[0].addToProject(todo2);
+projects.filter(p => { return p.name === "Todo List" })[0].addToProject(todo3);
+projects.filter(p => { return p.name === "Todo List" })[0].addToProject(todo4);
 
 export { projects, addNewProject, removeProject, editProjectName };
