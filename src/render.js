@@ -1,3 +1,4 @@
+require('lodash');
 import { projects, addNewProject, removeProject, editProjectName } from "./logic.js";
 
 var storedName = "";
@@ -69,7 +70,7 @@ const renderProject = (project, index) => {
         }
         item.appendChild(ico);
         item.setAttribute("class", "todo-item list-group-item list-group-item" + priority);
-        item.innerHTML = item.innerHTML + " " + todo.title;
+        item.innerHTML = item.innerHTML + " " + _.startCase(_.toLower(todo.title));
         item.appendChild(date);
         ul.appendChild(item)
     })
