@@ -103,9 +103,21 @@ form {
         ul {
             padding-left: 0;
             width: 100%;
+            .active {
+                background-color: $background-green;
+                border-color: $border-green;
+            }
             .todo-item {
+                transition: all .5s ease;
                 .todo-date {
                     float: right;
+                }
+                .expanded-todo {
+                    margin-top: 20px;
+                    padding: 10px;
+                    .h1 {
+                        font-size: 2.1rem;
+                    }
                 }
             }
         }

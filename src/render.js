@@ -32,7 +32,7 @@ const renderProject = (project, index) => {
     var deleteIco = document.createElement('i');
     editIco.setAttribute("class", "far fa-edit")
     deleteIco.setAttribute("class", "fa fa-trash")
-    editButton.setAttribute("class", "toolbar-item edit");
+    editButton.setAttribute("class", "toolbar-item edit"); //TODO fix these for new event listener assignments
     deleteButton.setAttribute("class", "toolbar-item delete");
     deleteButton.id = "delete-button";
     editButton.id = "edit-button";
@@ -47,10 +47,11 @@ const renderProject = (project, index) => {
     
     var ul = document.createElement("ul");
     ul.setAttribute("class", "list-group")
-    project.todos.forEach((todo) => {
+    project.todos.forEach((todo, i) => {
         var item = document.createElement("li");
         var date = document.createElement("span");
         var ico = document.createElement("i");
+        item.setAttribute("data-id", i);
         ico.setAttribute("class", "	fa fa-angle-right");
         date.setAttribute("class", "todo-date");
         date.innerHTML = todo.dueDate;
@@ -68,15 +69,36 @@ const renderProject = (project, index) => {
             default:
                 priority = "-danger"
         }
-        item.appendChild(ico);
         item.setAttribute("class", "todo-item list-group-item list-group-item" + priority);
+        item.appendChild(ico);
         item.innerHTML = item.innerHTML + " " + _.startCase(_.toLower(todo.title));
         item.appendChild(date);
         ul.appendChild(item)
     })
     projectItems.appendChild(ul);
-
     setListeners();
+}
+
+const renderTodo = (event) => {
+    var element = event.target;
+    if(element.classList.contains("active")) { 
+        for(const n of element.childNodes){
+            if(n.nodeName == "DIV") { element.removeChild(n) }
+            if(n.nodeName == "I") { n.classList.add("fa-angle-right"); n.classList.remove("fa-angle-down"); }
+        }
+        element.classList.remove("active");
+    } 
+    else {
+        var todo = projects[document.getElementById('project-name').dataset.id].todos[element.dataset.id];
+        var expand = document.createElement("div");
+        var ico = element.getElementsByTagName('i')[0];
+        ico.classList.add("fa-angle-down");
+        ico.classList.remove("fa-angle-right");
+        expand.setAttribute("class","expanded-todo");
+        expand.innerHTML = '<h1 class="title">' + todo.title + '</h1><div class="description">' + todo.description + '</div><div class="date">Due: ' + todo.dueDate + '<div class="priority">Priority ' + todo.priorityText() + "</div>";
+        element.appendChild(expand);
+        element.classList.add("active");
+    }
 }
 
 const setProjectNameWidth = (projectName) => {
@@ -89,7 +111,6 @@ const renderProjectList = () => {
         var item = document.createElement("div");
         item.setAttribute("class", "project-item");
         item.setAttribute("data-id", i);
-        item.addEventListener("click", function(){ return renderProject(p, i) });
         item.innerHTML = p.name;
         view.appendChild(item);
     })
@@ -102,6 +123,16 @@ const setListeners = () => {
     document.getElementById('delete-button').addEventListener("click", deleteProjectButton);
     document.getElementById('submit-edit-project-button').addEventListener("click", submitEditProjectButton);
     document.getElementById('cancel-edit-project-button').addEventListener("click", cancelEditProjectButton);
+
+    var projectsList = document.querySelector("#projects");
+    projectsList.addEventListener("click", (e) => {
+        return renderProject(projects[e.target.dataset.id], e.target.dataset.id) //TODO refactor a bit
+    })
+
+    var todoList = document.querySelector('#project-items');
+    todoList.addEventListener("click", (e) => {
+        return renderTodo(e)
+    })
 
     document.addEventListener("click", (evt) => {
         const form = document.getElementById('new-project-form');
