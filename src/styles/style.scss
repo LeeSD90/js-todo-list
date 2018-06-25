@@ -73,7 +73,7 @@ form {
             margin-right: 10px;
             border: none;
         }
-        .toolbar {
+        .toolbar, .special-toolbar {
             display: inline;
         }
         .toolbar-item {
@@ -89,6 +89,9 @@ form {
             }
             &.submit {
                 color: $link-green;
+            }
+            &.cancel {
+                color: $link-orange;
             }
         }
         button {
