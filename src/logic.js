@@ -23,8 +23,8 @@ const addNewTodo = (project, title, description, dueDate, priority) => {
     project.addToProject(todo);
 }
 
-var todo = todoFactory("myFirstTodo", "Here is a test Todo", "date", 3);
-var todo2 = todoFactory("a second todo", "Here is a second test todo", "date", 2);
+var todo = todoFactory("myFirstTodo", "Here is a test Todo", "14/5/2018", 3);
+var todo2 = todoFactory("a second todo", "Here is a second test todo", "1/4/2019", 2);
 addNewProject("Todo List");
 addNewProject("Second project");
 projects.filter(p => { return p.name === "Todo List" })[0].addToProject(todo);

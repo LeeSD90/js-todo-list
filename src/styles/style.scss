@@ -100,5 +100,17 @@ form {
     }
     #project-items {
         padding-left: 20px;
+        ul {
+            padding-left: 0;
+            width: 100%;
+            .todo-item {
+                display: block;
+                padding-left: 0;
+                .todo-date {
+                    float: right;
+                }
+            }
+        }
+
     }
 }

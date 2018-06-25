@@ -44,12 +44,19 @@ const renderProject = (project, index) => {
     var projectName = document.getElementById('project-name');
     projectName.parentNode.insertBefore(toolbar, projectName.nextSibling);
     
+    var ul = document.createElement("ul");
+    ul.setAttribute("class", "list-group list-group-flush")
     project.todos.forEach((todo) => {
-        var item = document.createElement("div");
-        item.setAttribute("class", "todo-item");
+        var item = document.createElement("li");
+        var date = document.createElement("span");
+        date.setAttribute("class", "todo-date");
+        date.innerHTML = todo.dueDate;
+        item.setAttribute("class", "todo-item list-group-item");
         item.innerHTML = todo.title;
-        projectItems.appendChild(item);
+        item.appendChild(date);
+        ul.appendChild(item)
     })
+    projectItems.appendChild(ul);
 
     setListeners();
 }
@@ -150,7 +157,6 @@ function submitEditProjectButton() {
 }
 
 function cancelEditProjectButton() {
-    console.log("canceledit")
     toggleProjectEditToolbar();
 }
 
