@@ -49,10 +49,11 @@ const renderProject = (project, index) => {
     project.todos.forEach((todo) => {
         var item = document.createElement("li");
         var date = document.createElement("span");
+        var ico = document.createElement("i");
+        ico.setAttribute("class", "	fa fa-angle-right");
         date.setAttribute("class", "todo-date");
         date.innerHTML = todo.dueDate;
         var priority = "";
-        console.log(priority)
         switch(parseInt(todo.priority)){
             case 1:
                 priority = "-info";
@@ -66,8 +67,9 @@ const renderProject = (project, index) => {
             default:
                 priority = "-danger"
         }
+        item.appendChild(ico);
         item.setAttribute("class", "todo-item list-group-item list-group-item" + priority);
-        item.innerHTML = todo.title;
+        item.innerHTML = item.innerHTML + " " + todo.title;
         item.appendChild(date);
         ul.appendChild(item)
     })
