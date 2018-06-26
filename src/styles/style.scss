@@ -125,4 +125,15 @@ form {
             }
         }
     }
+    .todo-form {
+        padding: 25px;
+        transition: transform 0.3s ease;
+        transform-origin: top;
+        transform: scaleY(0);
+        height: auto;
+        overflow: hidden;
+        &.expanded {
+            transform: scaleY(1);
+        }
+    }
 }

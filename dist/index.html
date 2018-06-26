@@ -1,51 +1,72 @@
 <!doctype html>
 <html>
-  <head>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+<head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+        crossorigin="anonymous">
     <title>JS Todo-List</title>
-  </head>
-  <body>
-      <div class="container">
-          <div class="row">
-              <div id="project-list" class="col-2">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div id="project-list" class="col-2">
                 <h1>Projects</h1>
                 <div id="projects">
-                    
+
                 </div>
                 <form id="new-project-form">
                     <div class="form-row">
                         <input id="new-project" class="form-control project-textbox" type="text" placeholder="New Project Name">
-                        <button id="new-project-button" type="button" class="btn btn-info btn-sm"><i class="fas fa-plus"></i></button>
-                        <button id="submit-new-project-button" type="button" class="btn btn-success btn-sm hidden"><i class="fas fa-check"></i></button>
+                        <button id="new-project-button" type="button" class="btn btn-info btn-sm">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                        <button id="submit-new-project-button" type="button" class="btn btn-success btn-sm hidden">
+                            <i class="fas fa-check"></i>
+                        </button>
                     </div>
                 </form>
-              </div>
-              <div id="project-view" class="col-10">
+            </div>
+            <div id="project-view" class="col-10">
                 <div class="row">
                     <div id="project-heading" class="col-12">
                         <input id="project-name" readonly>
                         <div id="project-toolbar" class="toolbar">
-                            <div id="edit-button" class="toolbar-item edit"><i class="fas fa-edit"></i></div>
-                            <div id="delete-button" class="toolbar-item submit"><i class="fas fa-trash"></i></div>
+                            <div id="edit-button" class="toolbar-item edit">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <div id="delete-button" class="toolbar-item submit">
+                                <i class="fas fa-trash"></i>
+                            </div>
                         </div>
                         <div id="edit-toolbar" class="special-toolbar hidden">
-                            <div id="submit-edit-project-button" class="toolbar-item submit"><i class="fas fa-check"></i></div>
-                            <div id="cancel-edit-project-button" class="toolbar-item cancel"><i class="fas fa-times"></i></div>
+                            <div id="submit-edit-project-button" class="toolbar-item submit">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div id="cancel-edit-project-button" class="toolbar-item cancel">
+                                <i class="fas fa-times"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div id="project-items" class="row">
 
                 </div>
-                <div id="new-todo" class="row">
+                <button id="new-todo-button" type="button" class="btn btn-info btn-sm">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <button id="cancel-new-todo-button" type="button" class="btn btn-warning btn-sm hidden">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <div id="new-todo" class="todo-form row">
                     <form id="new-todo-form">
                         <div class="form-group">
-                          <label for="new-todo-title">Title</label>
-                          <input type="text" class="form-control" id="new-todo-title" placeholder="Enter Title">
+                            <label for="new-todo-title">Title</label>
+                            <input type="text" class="form-control" id="new-todo-title" placeholder="Enter Title">
                         </div>
                         <div class="form-group">
-                          <label for="new-todo-description">Description</label>
-                          <input type="textarea" class="form-control" id="new-todo-description" placeholder="Description">
+                            <label for="new-todo-description">Description</label>
+                            <input type="textarea" class="form-control" id="new-todo-description" placeholder="Description">
                         </div>
                         <div class="form-group">
                             <label for="todo-date">Due Date</label>
@@ -58,14 +79,38 @@
                                 <option value="2">Medium</option>
                                 <option value="3">High</option>
                             </select>
-                        <button id="submit-new-todo-button" type="button" class="btn btn-success">Add new todo</button>
-                      </form>
+                            <button id="submit-new-todo-button" type="button" class="btn btn-success">Add Todo</button>
+                    </form>
+                    </div>
+                    <div id="edit-todo" class="todo-form row">
+                        <form id="edit-todo-form">
+                            <div class="form-group">
+                                <label for="edit-todo-title">Title</label>
+                                <input type="text" class="form-control" id="edit-todo-title" placeholder="Enter Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-todo-description">Description</label>
+                                <input type="textarea" class="form-control" id="edit-todo-description" placeholder="Description">
+                            </div>
+                            <div class="form-group">
+                                <label for="todo-date">Due Date</label>
+                                <input type="date" class="form-control" id="edit-todo-date" placeholder="Due Date">
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-todo-priority">Priority</label>
+                                <select name="priority" id="edit-todo-priority">
+                                    <option value="1">Low</option>
+                                    <option value="2">Medium</option>
+                                    <option value="3">High</option>
+                                </select>
+                                <button id="submit-edit-todo-button" type="button" class="btn btn-success">Add Todo</button>
+                        </form>
+                        </div>
+                    </div>
                 </div>
-              </div>
-          </div>
-      </div>
-      <script src="lodash.js"></script>
-      <script src="bundle.js"></script>
-  </body>
-  
+            </div>
+            <script src="lodash.js"></script>
+            <script src="bundle.js"></script>
+</body>
+
 </html>

@@ -97,7 +97,10 @@ const setListeners = () => {
     document.getElementById('delete-button').addEventListener("click", deleteProjectButton);
     document.getElementById('submit-edit-project-button').addEventListener("click", submitEditProjectButton);
     document.getElementById('cancel-edit-project-button').addEventListener("click", cancelEditProjectButton);
-    document.getElementById('submit-new-todo-button').addEventListener("click", newTodo);
+    document.getElementById('new-todo-button').addEventListener("click", newTodo);
+    document.getElementById('submit-new-todo-button').addEventListener("click", submitNewTodo);
+    document.getElementById('submit-edit-todo-button').addEventListener("click", submitEditTodo);
+    document.getElementById('cancel-new-todo-button').addEventListener("click", cancelNewTodo)
 
     var projectsList = document.querySelector("#projects");
     projectsList.addEventListener("click", (e) => {
@@ -184,7 +187,43 @@ function deleteProjectButton() {
     renderProject(projects[0], 0);
 }
 
+function editTodo(todo) {
+    var title = document.getElementById('edit-todo-title');
+    var description = document.getElementById('edit-todo-description');
+    var date = document.getElementById('edit-todo-date');
+    var priority = document.getElementById('edit-todo-priority');
+
+    title.value = todo.title;
+    description.value = todo.description;
+    date.value = todo.dueDate;
+    priority.value = todo.priority;
+}
+
+function submitEditTodo() {
+
+}
+
+function cancelNewTodo() { // Should probably just be one method and button that toggles? Could do this with a lot of elements in this app D:
+    var form = document.getElementById('new-todo');
+    var addTodo = document.getElementById('new-todo-button');
+    var minimise = document.getElementById('cancel-new-todo-button');
+
+    addTodo.classList.remove("hidden");
+    form.classList.remove("expanded");
+    minimise.classList.add("hidden");
+}
+
 function newTodo() {
+    var form = document.getElementById('new-todo');
+    var addTodo = document.getElementById('new-todo-button');
+    var minimise = document.getElementById('cancel-new-todo-button');
+
+    addTodo.classList.add("hidden");
+    form.classList.add("expanded");
+    minimise.classList.remove("hidden");
+}
+
+function submitNewTodo() {
     var project = projects[document.getElementById('project-name').dataset.id];
     var title = document.getElementById('new-todo-title');
     var description = document.getElementById('new-todo-description');
