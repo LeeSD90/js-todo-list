@@ -11,6 +11,7 @@ const render = () => {
 }
 
 const renderProject = (project, index) => {
+    projectEditToolbarOff();
     storedName = "";
     var projectItems = document.getElementById('project-items');
     projectItems.innerHTML = "";
@@ -92,7 +93,7 @@ const renderProjectList = () => {
 const setListeners = () => {
     document.getElementById('new-project-button').addEventListener("click", toggleButtons);
     document.getElementById('submit-new-project-button').addEventListener("click", submitNewProjectButton);
-    document.getElementById('edit-button').addEventListener("click", toggleProjectEditToolbar);
+    document.getElementById('edit-button').addEventListener("click", projectEditToolbarOn);
     document.getElementById('delete-button').addEventListener("click", deleteProjectButton);
     document.getElementById('submit-edit-project-button').addEventListener("click", submitEditProjectButton);
     document.getElementById('cancel-edit-project-button').addEventListener("click", cancelEditProjectButton);
@@ -139,20 +140,23 @@ function toggleButtons() {
     document.getElementById('submit-new-project-button').classList.toggle("hidden");
 }
 
-function toggleProjectEditToolbar() {
+function projectEditToolbarOff() {
     var projectName = document.getElementById('project-name')
     if(storedName === "") { storedName = projectName.value; }
     projectName.value = storedName;
 
-    if(projectName.readOnly) { 
-        projectName.readOnly = false;
-        projectName.focus();
-    } else {
-        projectName.readOnly = true;
-    }
+    projectName.readOnly = true;
 
-    document.getElementById('edit-toolbar').classList.toggle("hidden");
-    document.getElementById('project-toolbar').classList.toggle("hidden");
+    document.getElementById('edit-toolbar').classList.add("hidden");
+    document.getElementById('project-toolbar').classList.remove("hidden");
+}
+
+function projectEditToolbarOn() {
+    var projectName = document.getElementById('project-name')
+    projectName.readOnly = false;
+    projectName.focus();
+    document.getElementById('edit-toolbar').classList.remove("hidden");
+    document.getElementById('project-toolbar').classList.add("hidden");
 }
 
 function submitNewProjectButton() {
@@ -165,10 +169,11 @@ function submitEditProjectButton() {
     var project = document.getElementById('project-name');
     editProjectName(project.getAttribute("data-id"), project.value);
     renderProjectList();
+    projectEditToolbarOff();
 }
 
 function cancelEditProjectButton() {
-    toggleProjectEditToolbar();
+    projectEditToolbarOff();
 }
 
 function deleteProjectButton() {

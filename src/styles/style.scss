@@ -72,6 +72,8 @@ form {
             color: inherit;
             margin-right: 10px;
             border: none;
+            border-bottom: 1px solid $border-grey;
+            padding-left: 10px;
         }
         .toolbar, .special-toolbar {
             display: inline;
