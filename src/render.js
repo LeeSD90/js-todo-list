@@ -1,5 +1,5 @@
 require('lodash');
-import { projects, addNewProject, removeProject, editProjectName } from "./logic.js";
+import { projects, addNewProject, removeProject, editProjectName, addNewTodo } from "./logic.js";
 
 var storedName = "";
 
@@ -97,6 +97,7 @@ const setListeners = () => {
     document.getElementById('delete-button').addEventListener("click", deleteProjectButton);
     document.getElementById('submit-edit-project-button').addEventListener("click", submitEditProjectButton);
     document.getElementById('cancel-edit-project-button').addEventListener("click", cancelEditProjectButton);
+    document.getElementById('submit-new-todo-button').addEventListener("click", newTodo);
 
     var projectsList = document.querySelector("#projects");
     projectsList.addEventListener("click", (e) => {
@@ -181,6 +182,23 @@ function deleteProjectButton() {
     removeProject(project.getAttribute("data-id"));
     renderProjectList();
     renderProject(projects[0], 0);
+}
+
+function newTodo() {
+    var project = projects[document.getElementById('project-name').dataset.id];
+    var title = document.getElementById('new-todo-title');
+    var description = document.getElementById('new-todo-description');
+    var date = document.getElementById('new-todo-date');
+    var priority = document.getElementById('new-todo-priority');
+
+    addNewTodo(project, title.value, description.value, date.value, priority.value);
+
+    title.value = "";
+    description.value = "";
+    date.value = "";
+    priority.value = "";
+
+    renderProject(project, document.getElementById('project-name').dataset.id);
 }
 
 export { render };

@@ -37,6 +37,30 @@
                 <div id="project-items" class="row">
 
                 </div>
+                <div id="new-todo" class="row">
+                    <form id="new-todo-form">
+                        <div class="form-group">
+                          <label for="new-todo-title">Title</label>
+                          <input type="text" class="form-control" id="new-todo-title" placeholder="Enter Title">
+                        </div>
+                        <div class="form-group">
+                          <label for="new-todo-description">Description</label>
+                          <input type="textarea" class="form-control" id="new-todo-description" placeholder="Description">
+                        </div>
+                        <div class="form-group">
+                            <label for="todo-date">Due Date</label>
+                            <input type="date" class="form-control" id="new-todo-date" placeholder="Due Date">
+                        </div>
+                        <div class="form-group">
+                            <label for="new-todo-priority">Priority</label>
+                            <select name="priority" id="new-todo-priority">
+                                <option value="1">Low</option>
+                                <option value="2">Medium</option>
+                                <option value="3">High</option>
+                            </select>
+                        <button id="submit-new-todo-button" type="button" class="btn btn-success">Add new todo</button>
+                      </form>
+                </div>
               </div>
           </div>
       </div>

@@ -35,4 +35,4 @@ projects.filter(p => { return p.name === "Todo List" })[0].addToProject(todo2);
 projects.filter(p => { return p.name === "Todo List" })[0].addToProject(todo3);
 projects.filter(p => { return p.name === "Todo List" })[0].addToProject(todo4);
 
-export { projects, addNewProject, removeProject, editProjectName };
+export { projects, addNewProject, removeProject, editProjectName, addNewTodo };
