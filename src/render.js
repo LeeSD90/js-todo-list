@@ -12,7 +12,6 @@ const render = () => {
 
 const renderProject = (project, index) => {
     storedName = "";
-    clearToolbars();
     var projectItems = document.getElementById('project-items');
     projectItems.innerHTML = "";
 
@@ -20,30 +19,7 @@ const renderProject = (project, index) => {
     projectName.setAttribute("data-id", index);
     projectName.readOnly = true;
     projectName.value = project.name;
-    setProjectNameWidth(projectName);
-
-    var toolbar = document.createElement('div');
-    toolbar.setAttribute("class", "toolbar");
-    toolbar.id = "project-toolbar"
-
-    var editButton = document.createElement('div');
-    var deleteButton = document.createElement('div');
-    var editIco = document.createElement('i');
-    var deleteIco = document.createElement('i');
-    editIco.setAttribute("class", "far fa-edit")
-    deleteIco.setAttribute("class", "fa fa-trash")
-    editButton.setAttribute("class", "toolbar-item edit"); //TODO fix these for new event listener assignments
-    deleteButton.setAttribute("class", "toolbar-item delete");
-    deleteButton.id = "delete-button";
-    editButton.id = "edit-button";
-
-    editButton.appendChild(editIco);
-    deleteButton.appendChild(deleteIco);
-    toolbar.appendChild(editButton);
-    toolbar.appendChild(deleteButton);
-
-    var projectName = document.getElementById('project-name');
-    projectName.parentNode.insertBefore(toolbar, projectName.nextSibling);
+    projectName.setAttribute("size", projectName.value.length);
     
     var ul = document.createElement("ul");
     ul.setAttribute("class", "list-group")
@@ -76,7 +52,7 @@ const renderProject = (project, index) => {
         ul.appendChild(item)
     })
     projectItems.appendChild(ul);
-    setListeners();
+
 }
 
 const renderTodo = (event) => {
@@ -101,12 +77,9 @@ const renderTodo = (event) => {
     }
 }
 
-const setProjectNameWidth = (projectName) => {
-    projectName.setAttribute("size", projectName.value.length);
-}
-
 const renderProjectList = () => {
     var view = document.getElementById('projects');
+    view.innerHTML = "";
     projects.forEach((p, i) => {
         var item = document.createElement("div");
         item.setAttribute("class", "project-item");
@@ -158,17 +131,6 @@ const clearAll = () => {
     projectItems.innerHTML = "";
     projectName.innerHTML = "";
     projects.innerHTML = "";
-    clearToolbars();
-}
-
-const clearToolbars = () => {
-    var toolbars = document.getElementsByClassName('toolbar');
-    while(toolbars[0]){
-        toolbars[0].parentNode.removeChild(toolbars[0]);
-    }
-
-    var editToolbar = document.getElementById('edit-toolbar');
-    editToolbar.classList.add("hidden");
 }
 
 function toggleButtons() {
@@ -196,13 +158,13 @@ function toggleProjectEditToolbar() {
 function submitNewProjectButton() {
     addNewProject(document.getElementById('new-project').value);
     toggleButtons();
-    render();
+    renderProjectList();
 }
 
 function submitEditProjectButton() {
     var project = document.getElementById('project-name');
     editProjectName(project.getAttribute("data-id"), project.value);
-    render();
+    renderProjectList();
 }
 
 function cancelEditProjectButton() {
@@ -212,7 +174,8 @@ function cancelEditProjectButton() {
 function deleteProjectButton() {
     var project = document.getElementById('project-name');
     removeProject(project.getAttribute("data-id"));
-    render();
+    renderProjectList();
+    renderProject(projects[0], 0);
 }
 
 export { render };

@@ -3,6 +3,7 @@ import todoFactory from './todo.js';
 
 let projects = [];
 
+// TODO Prevent removal of last project?
 const removeProject = (id) => {
     projects.splice(id, 1);
 }
