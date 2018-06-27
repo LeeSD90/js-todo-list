@@ -56,20 +56,6 @@ const renderProject = (project, index) => {
 
 }
 
-const showTodoListener = (event) => {
-    var element = event.target;
-    if(element.classList.contains("active")) { 
-        for(const n of element.childNodes){
-            if(n.nodeName == "DIV") { element.removeChild(n) }
-            if(n.nodeName == "I") { n.classList.add("fa-angle-right"); n.classList.remove("fa-angle-down"); }
-        }
-        element.classList.remove("active");
-    } 
-    else {
-        renderExpandedTodo(element);
-    }
-}
-
 const renderExpandedTodo = (element) => {
     var todo = projects[document.getElementById('project-name').dataset.id].todos[element.dataset.id];
     var expand = document.createElement("div");
@@ -84,8 +70,8 @@ const renderExpandedTodo = (element) => {
                         '<div>Due: <span class="date">' + todo.dueDate + '</span></div>' +
                         '<div>Priority <span class="priority">' + todo.priorityText() + '</span></div>' +
                         '<div id="todo-edit-button" class="button" data-id=' + element.dataset.id + '"><i class="fas fa-edit"></i>Edit</div>' + 
-                        '<div id="todo-submit-edit-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-save"></i>Save</div>' +
-                        '<div id="todo-delete-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-check"></i>Mark Completed</div>';
+                        '<div id="todo-submit-edit-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-save"></i>Save</div>';
+                        //'<div id="todo-delete-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-check"></i>Mark Completed</div>';
     
     element.appendChild(expand);
     element.classList.add("active");
@@ -124,8 +110,23 @@ const setListeners = () => {
     var todoList = document.querySelector('#project-items');
     todoList.addEventListener("click", (e) => {
         if(e.target.id === "todo-edit-button") { return }
+        else if(e.target.id === "todo-submit-edit-button") { return }
         else { return showTodoListener(e) }
     })
+
+    const showTodoListener = (event) => {
+        var element = event.target;
+        if(element.classList.contains("active")) { 
+            for(const n of element.childNodes){
+                if(n.nodeName == "DIV") { element.removeChild(n) }
+                if(n.nodeName == "I") { n.classList.add("fa-angle-right"); n.classList.remove("fa-angle-down"); }
+            }
+            element.classList.remove("active");
+        } 
+        else {
+            renderExpandedTodo(element);
+        }
+    }
 
     document.addEventListener("click", (evt) => {
         const form = document.getElementById('new-project-form');
@@ -146,7 +147,7 @@ const setListeners = () => {
         if(el.id == 'todo-edit-button'){
             editTodo(el);
         }
-        else if(el.id == 'todo-edit-submit-button'){
+        else if(el.id == 'todo-submit-edit-button'){
             submitEditTodo(el);
         }
     }
@@ -214,10 +215,10 @@ function deleteProjectButton() {
 }
 
 function editTodo(el) {
-    var title = el.parentNode.getElementsByClassName("title")[0]
-    var desc = el.parentNode.getElementsByClassName("description")[0]
-    var date = el.parentNode.getElementsByClassName("date")[0]
-    var priority = el.parentNode.getElementsByClassName("priority")[0]
+    var title = el.parentNode.getElementsByClassName("title")[0];
+    var desc = el.parentNode.getElementsByClassName("description")[0];
+    var date = el.parentNode.getElementsByClassName("date")[0];
+    var priority = el.parentNode.getElementsByClassName("priority")[0];
     
     title.setAttribute("contenteditable", true);
     title.classList.add("editing");
@@ -232,8 +233,31 @@ function editTodo(el) {
     priority.classList.add("editing");
 }
 
-function submitEditTodo() {
+function submitEditTodo(el) {
+    var title = el.parentNode.getElementsByClassName("title")[0];
+    var desc = el.parentNode.getElementsByClassName("description")[0];
+    var date = el.parentNode.getElementsByClassName("date")[0];
+    var priority = el.parentNode.getElementsByClassName("priority")[0];
 
+    title.setAttribute("contenteditable", false);
+    title.classList.remove("editing");
+
+    desc.setAttribute("contenteditable", false);
+    desc.classList.remove("editing");
+
+    date.setAttribute("contenteditable", false);
+    date.classList.remove("editing");
+
+    priority.setAttribute("contenteditable", false);
+    priority.classList.remove("editing");
+
+    var todo = projects[document.getElementById('project-name').dataset.id].todos[el.dataset.id]
+    todo.title = title.innerHTML;
+    todo.description = desc.innerHTML;
+    todo.dueDate = date.innerHTML;
+    todo.priority = priority.innerHTML;
+
+    renderProject(projects[document.getElementById('project-name').dataset.id], document.getElementById('project-name').dataset.id);
 }
 
 function cancelNewTodo() { // Should probably just be one method and button that toggles? Could do this with a lot of elements in this app D:
