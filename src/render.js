@@ -30,7 +30,7 @@ const renderProject = (project, index) => {
         var ico = document.createElement("i");
         item.setAttribute("data-id", i);
         ico.setAttribute("class", "	fa fa-angle-right");
-        date.setAttribute("class", "todo-date");
+        date.setAttribute("class", "header-todo-date");
         date.innerHTML = todo.dueDate;
         var priority = "";
         switch(parseInt(todo.priority)){
@@ -67,11 +67,17 @@ const renderExpandedTodo = (element) => {
     expand.setAttribute("class","expanded-todo");
     expand.innerHTML = '<h1 class="title">' + todo.title + '</h1>' +
                         '<div class="description">' + todo.description + '</div>' +
-                        '<div>Due: <span class="date">' + todo.dueDate + '</span></div>' +
-                        '<div>Priority <span class="priority">' + todo.priorityText() + '</span></div>' +
+                        '<div>Due: <input type="date" class="todo-date-picker editing hidden"><span class="todo-date date">' + todo.dueDate + '</span></div>' +
+                        '<div>Priority: ' +
+                        '<select class="todo-priority-selector editing hidden">' +
+                        '<option value="1">Low</option>' +
+                        '<option value="2">Medium</option>' +
+                        '<option value="3">High</option>' +
+                        '</select>' + 
+                        '<span class="todo-priority priority">' + todo.priorityText() + '</span></div>' +
                         '<div id="todo-edit-button" class="button" data-id=' + element.dataset.id + '"><i class="fas fa-edit"></i>Edit</div>' + 
                         '<div id="todo-submit-edit-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-save"></i>Save</div>';
-                        //'<div id="todo-delete-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-check"></i>Mark Completed</div>';
+                        '<div id="todo-delete-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-check"></i>Remove</div>';
     
     element.appendChild(expand);
     element.classList.add("active");
@@ -217,8 +223,10 @@ function deleteProjectButton() {
 function editTodo(el) {
     var title = el.parentNode.getElementsByClassName("title")[0];
     var desc = el.parentNode.getElementsByClassName("description")[0];
-    var date = el.parentNode.getElementsByClassName("date")[0];
-    var priority = el.parentNode.getElementsByClassName("priority")[0];
+    var dateDisplay = el.parentNode.getElementsByClassName('todo-date')[0];
+    var priorityDisplay = el.parentNode.getElementsByClassName('todo-priority')[0];
+    var datePicker = el.parentNode.getElementsByClassName('todo-date-picker')[0];
+    var prioritySelector = el.parentNode.getElementsByClassName('todo-priority-selector')[0];
     
     title.setAttribute("contenteditable", true);
     title.classList.add("editing");
@@ -226,18 +234,20 @@ function editTodo(el) {
     desc.setAttribute("contenteditable", true);
     desc.classList.add("editing");
 
-    date.setAttribute("contenteditable", true);
-    date.classList.add("editing");
+    dateDisplay.classList.add("hidden");
+    datePicker.classList.remove("hidden");
 
-    priority.setAttribute("contenteditable", true);
-    priority.classList.add("editing");
+    priorityDisplay.classList.add("hidden");
+    prioritySelector.classList.remove("hidden");
 }
 
 function submitEditTodo(el) {
     var title = el.parentNode.getElementsByClassName("title")[0];
     var desc = el.parentNode.getElementsByClassName("description")[0];
-    var date = el.parentNode.getElementsByClassName("date")[0];
-    var priority = el.parentNode.getElementsByClassName("priority")[0];
+    var dateDisplay = el.parentNode.getElementsByClassName('todo-date')[0];
+    var priorityDisplay = el.parentNode.getElementsByClassName('todo-priority')[0];
+    var datePicker = el.parentNode.getElementsByClassName('todo-date-picker')[0];
+    var prioritySelector = el.parentNode.getElementsByClassName('todo-priority-selector')[0];
 
     title.setAttribute("contenteditable", false);
     title.classList.remove("editing");
@@ -245,17 +255,17 @@ function submitEditTodo(el) {
     desc.setAttribute("contenteditable", false);
     desc.classList.remove("editing");
 
-    date.setAttribute("contenteditable", false);
-    date.classList.remove("editing");
+    dateDisplay.classList.remove("hidden");
+    datePicker.classList.add("hidden");
 
-    priority.setAttribute("contenteditable", false);
-    priority.classList.remove("editing");
+    priorityDisplay.classList.remove("hidden");
+    prioritySelector.classList.add("hidden");
 
     var todo = projects[document.getElementById('project-name').dataset.id].todos[el.dataset.id]
     todo.title = title.innerHTML;
     todo.description = desc.innerHTML;
-    todo.dueDate = date.innerHTML;
-    todo.priority = priority.innerHTML;
+    todo.dueDate = datePicker.value;
+    todo.priority = prioritySelector.value;
 
     renderProject(projects[document.getElementById('project-name').dataset.id], document.getElementById('project-name').dataset.id);
 }
