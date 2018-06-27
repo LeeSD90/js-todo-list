@@ -20,7 +20,7 @@ const addNewProject = (name) => {
 }
 
 const addNewTodo = (project, title, description, dueDate, priority) => {
-    var todo = todoFactory(title, description, dueDate, priority);
+    var todo = todoFactory(title, description, dueDate, priority); 
     project.addToProject(todo);
 }
 

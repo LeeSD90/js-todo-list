@@ -56,7 +56,7 @@ const renderProject = (project, index) => {
 
 }
 
-const renderTodo = (event) => {
+const showTodoListener = (event) => {
     var element = event.target;
     if(element.classList.contains("active")) { 
         for(const n of element.childNodes){
@@ -66,16 +66,29 @@ const renderTodo = (event) => {
         element.classList.remove("active");
     } 
     else {
-        var todo = projects[document.getElementById('project-name').dataset.id].todos[element.dataset.id];
-        var expand = document.createElement("div");
-        var ico = element.getElementsByTagName('i')[0];
-        ico.classList.add("fa-angle-down");
-        ico.classList.remove("fa-angle-right");
-        expand.setAttribute("class","expanded-todo");
-        expand.innerHTML = '<h1 class="title">' + todo.title + '</h1><div class="description">' + todo.description + '</div><div class="date">Due: ' + todo.dueDate + '<div class="priority">Priority ' + todo.priorityText() + "</div>";
-        element.appendChild(expand);
-        element.classList.add("active");
+        renderExpandedTodo(element);
     }
+}
+
+const renderExpandedTodo = (element) => {
+    var todo = projects[document.getElementById('project-name').dataset.id].todos[element.dataset.id];
+    var expand = document.createElement("div");
+    var ico = element.getElementsByTagName('i')[0];
+
+    ico.classList.add("fa-angle-down");
+    ico.classList.remove("fa-angle-right");
+
+    expand.setAttribute("class","expanded-todo");
+    expand.innerHTML = '<h1 class="title">' + todo.title + '</h1>' +
+                        '<div class="description">' + todo.description + '</div>' +
+                        '<div>Due: <span class="date">' + todo.dueDate + '</span></div>' +
+                        '<div>Priority <span class="priority">' + todo.priorityText() + '</span></div>' +
+                        '<div id="todo-edit-button" class="button" data-id=' + element.dataset.id + '"><i class="fas fa-edit"></i>Edit</div>' + 
+                        '<div id="todo-submit-edit-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-save"></i>Save</div>' +
+                        '<div id="todo-delete-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-check"></i>Mark Completed</div>';
+    
+    element.appendChild(expand);
+    element.classList.add("active");
 }
 
 const renderProjectList = () => {
@@ -99,8 +112,9 @@ const setListeners = () => {
     document.getElementById('cancel-edit-project-button').addEventListener("click", cancelEditProjectButton);
     document.getElementById('new-todo-button').addEventListener("click", newTodo);
     document.getElementById('submit-new-todo-button').addEventListener("click", submitNewTodo);
-    document.getElementById('submit-edit-todo-button').addEventListener("click", submitEditTodo);
     document.getElementById('cancel-new-todo-button').addEventListener("click", cancelNewTodo)
+
+    document.addEventListener("click", todoEditListener);
 
     var projectsList = document.querySelector("#projects");
     projectsList.addEventListener("click", (e) => {
@@ -109,7 +123,8 @@ const setListeners = () => {
 
     var todoList = document.querySelector('#project-items');
     todoList.addEventListener("click", (e) => {
-        return renderTodo(e)
+        if(e.target.id === "todo-edit-button") { return }
+        else { return showTodoListener(e) }
     })
 
     document.addEventListener("click", (evt) => {
@@ -125,6 +140,17 @@ const setListeners = () => {
         } while (target);
         if (document.getElementById('new-project').classList.contains("focused")) { toggleButtons(); }
     })
+
+    function todoEditListener(event) {
+        var el = event.target;
+        if(el.id == 'todo-edit-button'){
+            editTodo(el);
+        }
+        else if(el.id == 'todo-edit-submit-button'){
+            submitEditTodo(el);
+        }
+    }
+
 }
 
 const clearAll = () => {
@@ -187,16 +213,23 @@ function deleteProjectButton() {
     renderProject(projects[0], 0);
 }
 
-function editTodo(todo) {
-    var title = document.getElementById('edit-todo-title');
-    var description = document.getElementById('edit-todo-description');
-    var date = document.getElementById('edit-todo-date');
-    var priority = document.getElementById('edit-todo-priority');
+function editTodo(el) {
+    var title = el.parentNode.getElementsByClassName("title")[0]
+    var desc = el.parentNode.getElementsByClassName("description")[0]
+    var date = el.parentNode.getElementsByClassName("date")[0]
+    var priority = el.parentNode.getElementsByClassName("priority")[0]
+    
+    title.setAttribute("contenteditable", true);
+    title.classList.add("editing");
 
-    title.value = todo.title;
-    description.value = todo.description;
-    date.value = todo.dueDate;
-    priority.value = todo.priority;
+    desc.setAttribute("contenteditable", true);
+    desc.classList.add("editing");
+
+    date.setAttribute("contenteditable", true);
+    date.classList.add("editing");
+
+    priority.setAttribute("contenteditable", true);
+    priority.classList.add("editing");
 }
 
 function submitEditTodo() {
