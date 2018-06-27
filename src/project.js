@@ -5,7 +5,11 @@ const projectFactory = (name) => {
         todos.push(todo);
     }
 
-    return { addToProject, todos, name }
+    function removeTodo(id){
+        todos.splice(id, 1);
+    }
+
+    return { addToProject, removeTodo, todos, name }
 };
 
 export default projectFactory;

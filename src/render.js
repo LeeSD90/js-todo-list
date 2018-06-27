@@ -76,9 +76,8 @@ const renderExpandedTodo = (element) => {
                         '</select>' + 
                         '<span class="todo-priority priority">' + todo.priorityText() + '</span></div>' +
                         '<div id="todo-edit-button" class="button" data-id=' + element.dataset.id + '"><i class="fas fa-edit"></i>Edit</div>' + 
-                        '<div id="todo-submit-edit-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-save"></i>Save</div>';
+                        '<div id="todo-submit-edit-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-save"></i>Save</div>' +
                         '<div id="todo-delete-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-check"></i>Remove</div>';
-    
     element.appendChild(expand);
     element.classList.add("active");
 }
@@ -117,6 +116,7 @@ const setListeners = () => {
     todoList.addEventListener("click", (e) => {
         if(e.target.id === "todo-edit-button") { return }
         else if(e.target.id === "todo-submit-edit-button") { return }
+        else if(e.target.id === "todo-delete-button") { return }
         else { return showTodoListener(e) }
     })
 
@@ -155,6 +155,9 @@ const setListeners = () => {
         }
         else if(el.id == 'todo-submit-edit-button'){
             submitEditTodo(el);
+        }
+        else if(el.id == 'todo-delete-button'){
+            deleteTodo(el);
         }
     }
 
@@ -236,8 +239,10 @@ function editTodo(el) {
 
     dateDisplay.classList.add("hidden");
     datePicker.classList.remove("hidden");
+    datePicker.placeholder = dateDisplay.innerHTML;
 
     priorityDisplay.classList.add("hidden");
+    prioritySelector.placeholder = priorityDisplay.innerHTML;
     prioritySelector.classList.remove("hidden");
 }
 
@@ -267,6 +272,13 @@ function submitEditTodo(el) {
     todo.dueDate = datePicker.value;
     todo.priority = prioritySelector.value;
 
+    renderProject(projects[document.getElementById('project-name').dataset.id], document.getElementById('project-name').dataset.id);
+}
+
+function deleteTodo(el) {
+    var project = projects[document.getElementById('project-name').dataset.id];
+    console.log(project)
+    project.removeTodo(el.dataset.id);
     renderProject(projects[document.getElementById('project-name').dataset.id], document.getElementById('project-name').dataset.id);
 }
 
