@@ -38,7 +38,8 @@ function removeTodoFromProject(id){
 
 function priorityText(todo) {
     var text = ""
-    switch(todo.priority){
+    if (parseInt(todo.priority) === NaN){ return todo.priority }
+    switch(parseInt(todo.priority)){
         case 1:
            text = "Low";
             break;
