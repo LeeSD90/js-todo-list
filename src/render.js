@@ -1,5 +1,5 @@
 require('lodash');
-import { projects, addNewProject, removeProject, editProjectName, addNewTodo } from "./logic.js";
+import { projects, addNewProject, removeProject, editProjectName, addNewTodo, priorityText } from "./logic.js";
 
 var storedName = "";
 
@@ -74,7 +74,7 @@ const renderExpandedTodo = (element) => {
                         '<option value="2">Medium</option>' +
                         '<option value="3">High</option>' +
                         '</select>' + 
-                        '<span class="todo-priority priority">' + todo.priorityText() + '</span></div>' +
+                        '<span class="todo-priority priority">' + priorityText(todo) + '</span></div>' +
                         '<div id="todo-edit-button" class="button" data-id=' + element.dataset.id + '"><i class="fas fa-edit"></i>Edit</div>' + 
                         '<div id="todo-submit-edit-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-save"></i>Save</div>' +
                         '<div id="todo-delete-button" class="button" data-id="' + element.dataset.id + '"><i class="fas fa-check"></i>Remove</div>';
@@ -246,6 +246,7 @@ function editTodo(el) {
     prioritySelector.classList.remove("hidden");
 }
 
+// TODO update localstorage
 function submitEditTodo(el) {
     var title = el.parentNode.getElementsByClassName("title")[0];
     var desc = el.parentNode.getElementsByClassName("description")[0];
@@ -275,14 +276,15 @@ function submitEditTodo(el) {
     renderProject(projects[document.getElementById('project-name').dataset.id], document.getElementById('project-name').dataset.id);
 }
 
+// TODO Fix to work with persistent storage changes
 function deleteTodo(el) {
     var project = projects[document.getElementById('project-name').dataset.id];
-    console.log(project)
     project.removeTodo(el.dataset.id);
     renderProject(projects[document.getElementById('project-name').dataset.id], document.getElementById('project-name').dataset.id);
 }
 
-function cancelNewTodo() { // Should probably just be one method and button that toggles? Could do this with a lot of elements in this app D:
+// TODO Should probably refactor to one method and button that toggles? Could do this with a lot of elements in this app D:
+function cancelNewTodo() { 
     var form = document.getElementById('new-todo');
     var addTodo = document.getElementById('new-todo-button');
     var minimise = document.getElementById('cancel-new-todo-button');
