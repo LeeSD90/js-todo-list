@@ -1,7 +1,7 @@
 const projectFactory = (name) => {
-    var todos = [];
+  const todos = [];
 
-    return { todos, name }
+  return { todos, name };
 };
 
 export default projectFactory;

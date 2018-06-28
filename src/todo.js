@@ -1,9 +1,10 @@
 const todoFactory = (title, description, dueDate, priority) => {
-    return { title,
+  return {
+    title,
     description,
     dueDate,
-    priority
-    }
+    priority,
+  };
 };
 
 export default todoFactory;
